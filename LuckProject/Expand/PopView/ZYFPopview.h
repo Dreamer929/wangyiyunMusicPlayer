@@ -20,4 +20,6 @@ typedef void (^OnMSStringViewCancleBlock)();
 
 -(void)showPopView;
 
+-(instancetype)initView:(UIView *)hostView rows:(NSMutableArray*)totalRows defaultSelectRow:(NSInteger)defaultSelectRow selectDone:(void(^)(NSInteger selectRow))donceBlock canleDone:(void(^)())cancleBlock;
+-(void)showMusicListView;
 @end

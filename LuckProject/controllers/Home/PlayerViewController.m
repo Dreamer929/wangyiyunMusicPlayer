@@ -7,6 +7,7 @@
 //
 
 #import "PlayerViewController.h"
+#import "ZYFPopview.h"
 
 @interface PlayerViewController ()
 
@@ -14,25 +15,24 @@
 @property (nonatomic, strong)AVPlayer *player;
 @property (nonatomic, strong)AVPlayerItem *playItem;
 @property (nonatomic, assign)NSInteger music_id;
-
 @property (nonatomic, strong)UIImageView *baseView;
 @property (nonatomic, strong)UIImageView *headView;
 @property (nonatomic, strong)UILabel *titleLable;
 @property (nonatomic, strong)UIButton *playBtn;
 @property (nonatomic, strong)UIButton *lastBtn;
 @property (nonatomic, strong)UIButton *nextBtn;
-
+@property (nonatomic, strong)UIButton *playStyleBtn;
+@property (nonatomic, strong)UIButton *listBtn;
+@property (nonatomic, assign)BOOL isSXPlay;
 @property (nonatomic, strong)UIView *baseV;
 @property (nonatomic, strong)UIButton *backBtn;
-
 @property (nonatomic, strong)UIProgressView *progressView;
 @property (nonatomic, strong)UISlider *slider;
-
 @property (nonatomic, strong)UILabel *currtenLable;
 @property (nonatomic, strong)UILabel *dutionLable;
-
 @property(nonatomic,strong) id timeObserver;
 
+@property (nonatomic, strong)ZYFPopview *popView;
 
 
 @end
@@ -49,7 +49,7 @@
         once_player = [[PlayerViewController alloc]init];
         AVAudioSession *session = [AVAudioSession sharedInstance];
         //类型是:播放和录音。
-        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+        [session setCategory:AVAudioSessionCategoryPlayback error:nil];
         //而且要激活，音频会话。
         [session setActive:YES error:nil];
     });
@@ -59,7 +59,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    [self setHeadviewImageBy:self.model];
     [self roatationAnimation];
 }
 
@@ -74,7 +73,7 @@
         self.dutionLable.text = @"00:00:00";
     }
     
-    
+    [self setHeadviewImageBy:self.model];
     
     
 }
@@ -93,6 +92,7 @@
     
     self.model = model;
     self.isPlay = YES;
+    self.isSXPlay = YES;
     
     self.currtenLable.text = @"00:00:00";
     self.dutionLable.text = model.duration;
@@ -208,6 +208,7 @@
      .model];
     
     
+    
     self.playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.playBtn setImage:ECIMAGENAME(@"play") forState:UIControlStateNormal];
     [self.playBtn addTarget:self action:@selector(playClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -215,7 +216,7 @@
     
     [self.playBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.baseV.mas_centerX);
-        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-80);
+        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-40);
         make.width.mas_equalTo(48);
         make.height.mas_offset(48);
         
@@ -228,7 +229,7 @@
     
     [self.lastBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.playBtn.mas_left).offset(-30);
-        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-80);
+        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-40);
         make.height.mas_equalTo(32);
         make.width.mas_equalTo(32);
     }];
@@ -240,7 +241,31 @@
     
     [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.playBtn.mas_right).offset(30);
-        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-80);
+        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-40);
+        make.height.mas_equalTo(32);
+        make.width.mas_equalTo(32);
+    }];
+    
+    self.listBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.listBtn setImage:ECIMAGENAME(@"musiclist") forState:UIControlStateNormal];
+    [self.listBtn addTarget:self action:@selector(showListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.baseV addSubview:self.listBtn];
+    
+    [self.listBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.nextBtn.mas_right).offset(30);
+        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-40);
+        make.height.mas_equalTo(32);
+        make.width.mas_equalTo(32);
+    }];
+    
+    self.playStyleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.playStyleBtn setImage:ECIMAGENAME(@"shunxu") forState:UIControlStateNormal];
+    [self.playStyleBtn addTarget:self action:@selector(playStyleClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.baseV addSubview:self.playStyleBtn];
+    
+    [self.playStyleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.lastBtn.mas_left).offset(-30);
+        make.centerY.mas_equalTo(self.baseV.mas_bottom).offset(-40);
         make.height.mas_equalTo(32);
         make.width.mas_equalTo(32);
     }];
@@ -305,6 +330,7 @@
 
 
 -(void)setHeadviewImageBy:(ShiCiDetialModel*)model{
+    
     
     [self.headView sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:ECIMAGENAME(@"guang")];
     self.titleLable.text = model.title;
@@ -374,14 +400,53 @@
     }
 }
 
+-(void)showListClick:(UIButton*)button{
+   
+    self.popView = [[ZYFPopview alloc]initView:[UIApplication sharedApplication].keyWindow rows:self.modelArr defaultSelectRow:self.currtenflag selectDone:^(NSInteger selectRow) {
+        
+        self.currtenflag = selectRow;
+        self.model = self.modelArr[selectRow];
+        
+        [self playCurrtnItem:self.model];
+        
+    } canleDone:^{
+        
+    }];
+    [self.popView showPopView];
+}
+
+-(void)playStyleClick:(UIButton*)button{
+    
+    NSInteger playFlag = 0;
+    
+    if (self.isSXPlay) {
+        //随机播放
+        NSInteger arrCount = self.modelArr.count;
+        playFlag = self.currtenflag;
+        self.currtenflag = arc4random()%(arrCount-1);
+        self.isSXPlay = NO;
+        [self.playStyleBtn setImage:ECIMAGENAME(@"suiji") forState:UIControlStateNormal];
+    }else{
+       //顺序播放
+        self.currtenflag = playFlag;
+        self.isSXPlay = YES;
+        [self.playStyleBtn setImage:ECIMAGENAME(@"shunxu") forState:UIControlStateNormal];
+    }
+}
+
 - (void)roatationAnimation{
     
-    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotationAnimation.fromValue = @(0.0);
-    rotationAnimation.toValue   = @(M_PI*2);
-    rotationAnimation.duration  = 20;
-    rotationAnimation.repeatCount = HUGE_VAL;
-    [self.headView.layer addAnimation:rotationAnimation forKey:@"playAnimation"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
+        
+        CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        rotationAnimation.fromValue = @(0.0);
+        rotationAnimation.toValue   = @(M_PI*2);
+        rotationAnimation.duration  = 20;
+        rotationAnimation.repeatCount = HUGE_VAL;
+        [self.headView.layer addAnimation:rotationAnimation forKey:@"playAnimation"];
+        
+    });
+    
 }
 
 #pragma mark - 监听音乐各种状态

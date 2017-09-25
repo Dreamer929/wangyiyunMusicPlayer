@@ -23,6 +23,10 @@
 		955970A61F70AAD30039779C /* MpThreeDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955970A31F70AAD30039779C /* MpThreeDetialViewController.m */; };
 		955970A71F70AAD30039779C /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955970A51F70AAD30039779C /* PlayerViewController.m */; };
 		955970A91F70B36D0039779C /* music.png in Resources */ = {isa = PBXBuildFile; fileRef = 955970A81F70B36D0039779C /* music.png */; };
+		9578B7461F74E52E00551284 /* danqu.png in Resources */ = {isa = PBXBuildFile; fileRef = 9578B7421F74E52E00551284 /* danqu.png */; };
+		9578B7471F74E52E00551284 /* musiclist.png in Resources */ = {isa = PBXBuildFile; fileRef = 9578B7431F74E52E00551284 /* musiclist.png */; };
+		9578B7481F74E52E00551284 /* shunxu.png in Resources */ = {isa = PBXBuildFile; fileRef = 9578B7441F74E52E00551284 /* shunxu.png */; };
+		9578B7491F74E52E00551284 /* suiji.png in Resources */ = {isa = PBXBuildFile; fileRef = 9578B7451F74E52E00551284 /* suiji.png */; };
 		9597A5921F05F4BE007ADA81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9597A5941F05F4BE007ADA81 /* InfoPlist.strings */; };
 		95D322D61F70B61A00B0E961 /* guang.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D322D51F70B61A00B0E961 /* guang.png */; };
 		95D322DA1F70B89100B0E961 /* pasu.png in Resources */ = {isa = PBXBuildFile; fileRef = 95D322D91F70B89100B0E961 /* pasu.png */; };
@@ -105,6 +109,10 @@
 		955970A41F70AAD30039779C /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		955970A51F70AAD30039779C /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		955970A81F70B36D0039779C /* music.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = music.png; sourceTree = "<group>"; };
+		9578B7421F74E52E00551284 /* danqu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = danqu.png; sourceTree = "<group>"; };
+		9578B7431F74E52E00551284 /* musiclist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = musiclist.png; sourceTree = "<group>"; };
+		9578B7441F74E52E00551284 /* shunxu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shunxu.png; sourceTree = "<group>"; };
+		9578B7451F74E52E00551284 /* suiji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suiji.png; sourceTree = "<group>"; };
 		9597A5981F05F584007ADA81 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		9597A5991F05F584007ADA81 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		9597A59A1F05F584007ADA81 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -335,6 +343,10 @@
 		95F72E811F21AA0E00A1A768 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				9578B7421F74E52E00551284 /* danqu.png */,
+				9578B7431F74E52E00551284 /* musiclist.png */,
+				9578B7441F74E52E00551284 /* shunxu.png */,
+				9578B7451F74E52E00551284 /* suiji.png */,
 				95F9A7801F7359BD0009C914 /* shouqi.png */,
 				95F9A77D1F724EAD0009C914 /* play.png */,
 				95D322EF1F711D9100B0E961 /* nextone.png */,
@@ -543,7 +555,7 @@
 				TargetAttributes = {
 					951D08CC1EFFB8130042EE2B = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = QQPLB98WMN;
+						DevelopmentTeam = 9ZTDJ45Z5F;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -599,15 +611,19 @@
 				951D08E01EFFB8130042EE2B /* LaunchScreen.storyboard in Resources */,
 				955970A91F70B36D0039779C /* music.png in Resources */,
 				95D322E91F70FDB900B0E961 /* BangDanTableViewCell.xib in Resources */,
+				9578B7491F74E52E00551284 /* suiji.png in Resources */,
 				95D322DA1F70B89100B0E961 /* pasu.png in Resources */,
 				95D322D61F70B61A00B0E961 /* guang.png in Resources */,
 				951D08DD1EFFB8130042EE2B /* Assets.xcassets in Resources */,
 				95D322EE1F71053800B0E961 /* MPThreeCollectionViewCell.xib in Resources */,
 				95F72E851F21AA0E00A1A768 /* hud_warning@2x.png in Resources */,
 				95F9A77E1F724EAD0009C914 /* play.png in Resources */,
+				9578B7461F74E52E00551284 /* danqu.png in Resources */,
 				95F9A7761F72374C0009C914 /* SearchCollectionViewCell.xib in Resources */,
 				951D08DB1EFFB8130042EE2B /* Main.storyboard in Resources */,
+				9578B7471F74E52E00551284 /* musiclist.png in Resources */,
 				95D322E41F70FD6D00B0E961 /* MPThreeDetialTableViewCell.xib in Resources */,
+				9578B7481F74E52E00551284 /* shunxu.png in Resources */,
 				95F72E841F21AA0E00A1A768 /* hud_success@2x.png in Resources */,
 				95D322F21F711D9100B0E961 /* lastone.png in Resources */,
 				95D322F11F711D9100B0E961 /* nextone.png in Resources */,
@@ -870,7 +886,8 @@
 			baseConfigurationReference = 7D8B9F60E6ADA2C45AD7887D /* Pods-LuckProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QQPLB98WMN;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9ZTDJ45Z5F;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/LuckProject/PrefixHeader.pch";
 				INFOPLIST_FILE = LuckProject/Info.plist;
@@ -878,6 +895,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = moxi.com.LuckProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -887,7 +905,8 @@
 			baseConfigurationReference = 2BCC951FDB0713513E39921D /* Pods-LuckProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QQPLB98WMN;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9ZTDJ45Z5F;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/LuckProject/PrefixHeader.pch";
 				INFOPLIST_FILE = LuckProject/Info.plist;
@@ -895,6 +914,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = moxi.com.LuckProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

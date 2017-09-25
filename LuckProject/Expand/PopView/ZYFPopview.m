@@ -9,7 +9,7 @@
 #import "ZYFPopview.h"
 
 
-@interface ZYFPopview ()
+@interface ZYFPopview ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong)UIView *hostView;
 
@@ -24,6 +24,12 @@
 @property (nonatomic, assign) NSInteger tipLabHeight;
 
 @property (nonatomic, assign) NSInteger selectedIndex;
+
+
+@property (nonatomic, strong)UIButton *closeBton;
+@property (nonatomic, strong)UITableView *tableView;
+
+
 
 @end
 
@@ -166,6 +172,127 @@
             self.shadeView.alpha = 0;
             [self removeFromSuperview];
         }];
+    }
+    
+}
+
+#pragma mark ------ muscilist------
+
+-(instancetype)initView:(UIView *)hostView rows:(NSMutableArray*)totalRows defaultSelectRow:(NSInteger)defaultSelectRow selectDone:(void (^)(NSInteger))donceBlock canleDone:(void (^)())cancleBlock{
+    
+    self = [super initWithFrame:hostView.bounds];
+    if (self) {
+
+    self.hostView = hostView;
+    self.data = totalRows;
+    self.onDoneBlock = donceBlock;
+    self.onCancleBlock = cancleBlock;
+    
+    [self setTableViewUp];
+    }
+    return self;
+}
+
+-(void)setTableViewUp{
+    
+    
+    if (!self.shadeView) {
+        self.shadeView = [[UIView alloc]initWithFrame:self.bounds];
+        self.shadeView.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:0.6];
+        [self addSubview:self.shadeView];
+    }
+
+    
+    if (!self.popBaseView) {
+        self.popBaseView = [[UIView alloc]initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height/2)];
+        self.popBaseView.backgroundColor = [UIColor lightTextColor];
+        [self.shadeView addSubview:self.popBaseView];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.popBaseView.frame = CGRectMake(0, self.bounds.size.height/2 , self.bounds.size.width, self.bounds.size.height/2);
+        }];
+    }
+    
+    if (!self.closeBton) {
+        self.closeBton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.closeBton setTitle:@"关闭" forState:UIControlStateNormal];
+        self.closeBton.backgroundColor = [UIColor whiteColor];
+        [self.closeBton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        self.closeBton.titleLabel.font = [UIFont systemFontOfSize:15];
+        [self.closeBton addTarget:self action:@selector(closeClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.popBaseView addSubview:self.closeBton];
+        
+        [self.closeBton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(self.popBaseView.mas_bottom);
+            make.left.mas_equalTo(self.popBaseView.mas_left);
+            make.right.mas_equalTo(self.popBaseView.mas_right);
+            make.height.mas_equalTo(50);
+        }];
+ 
+    }
+    
+    if (!self.tableView) {
+        self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.popBaseView.bounds.size.width, self.popBaseView.bounds.size.height - 50) style:UITableViewStylePlain];
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        [self.popBaseView addSubview:self.tableView];
+    }
+    
+
+}
+
+
+-(void)closeClick:(UIButton*)button{
+    
+    if (self.onCancleBlock) {
+        self.onCancleBlock();
+            [UIView animateWithDuration:0.3 animations:^{
+                self.popBaseView.frame = CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height/2);
+                
+            } completion:^(BOOL finished) {
+                self.shadeView.alpha = 0;
+                [self removeFromSuperview];
+            }];
+    }
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return self.data.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 64;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    ShiCiDetialModel *model = self.data[indexPath.row];
+    static NSString *cellID = @"cellID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+    }
+    cell.textLabel.text = model.title;
+    cell.detailTextLabel.text = model.duration;
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (self.onDoneBlock) {
+        
+        self.onDoneBlock(indexPath.row);
+            [UIView animateWithDuration:0.3 animations:^{
+                self.popBaseView.frame = CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height/2);
+                
+            } completion:^(BOOL finished) {
+                self.shadeView.alpha = 0;
+                [self removeFromSuperview];
+            }];
     }
     
 }
