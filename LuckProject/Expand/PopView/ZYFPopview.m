@@ -28,6 +28,7 @@
 
 @property (nonatomic, strong)UIButton *closeBton;
 @property (nonatomic, strong)UITableView *tableView;
+@property (nonatomic, assign)NSInteger defaultSelectRow;
 
 
 
@@ -185,6 +186,7 @@
 
     self.hostView = hostView;
     self.data = totalRows;
+        self.defaultSelectRow = defaultSelectRow;
     self.onDoneBlock = donceBlock;
     self.onCancleBlock = cancleBlock;
     
@@ -235,7 +237,10 @@
         self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.popBaseView.bounds.size.width, self.popBaseView.bounds.size.height - 50) style:UITableViewStylePlain];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.defaultSelectRow inSection:0];
+        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
         [self.popBaseView addSubview:self.tableView];
+        
     }
     
 
@@ -273,10 +278,15 @@
     static NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
     }
     cell.textLabel.text = model.title;
     cell.detailTextLabel.text = model.duration;
+    if (indexPath.row == self.defaultSelectRow) {
+        cell.textLabel.textColor = [UIColor redColor];
+    }else{
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
     
     return cell;
 }
